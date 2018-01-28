@@ -7,25 +7,43 @@
   <!-- Latest compiled and minified CSS & JS -->
   <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css" media="screen" title="no title">
+  <link rel="stylesheet" href="css/hover.css" media="screen" title="no title">
+
   <script src="https://code.jquery.com/jquery.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 
-<body>
-  <div class="container blog">
-    <div class="row">
-      <div class="col-md-2 col-sm-2">
-        <a class="btn btn-default" href="/dine-in">Dine-in</a>
+<body background="/images/background.jpeg">
+
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/login">Change User</a>
       </div>
-      <div class="col-md-2 col-sm-2">
-        <a class="btn btn-default" href="/to-go">To-Go</a>
-      </div>
-      <div class="col-md-2 col-sm-2">
-        <a class="btn btn-default" href="/login">Go Back to Login</a>
-      </div>
+
     </div>
+  </nav>
+
+  <div class="container" style="margin-top:150px">
     <div class="row">
-      <div class="col-md-12 blog-container">
+      <div class="col-md-4 col-sm-4 col-xs-6 shine_me">
+        <div class="hovereffect">
+          <img class="img-responsive" src="/images/dine-in.png" alt="" style="width:175x">
+          <div class="overlay">
+            <h2>Dine-In</h2>
+            <a class="info" href="/dine-in"></a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-4 col-xs-6 shine_me">
+        <div class="hovereffect">
+          <img class="img-responsive" src="/images/take-out.png" alt="" style="height:215px">
+          <div class="overlay">
+            <h2>To-Go</h2>
+            <a class="info" href="/To-Go"></a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
