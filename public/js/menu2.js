@@ -16,42 +16,42 @@ var ShoppingCart = (function($) {
         name: "Ramen",
         description: "Yummy Yummy in my tummy",
         imageUrl: "https://media.giphy.com/media/10SrYA07iDPyO4/giphy.gif",
-        price: 799
+        price: 1.00
       },
       {
         id: 1,
         name: "Churros",
         description: "Mmmmm",
         imageUrl: "https://media.giphy.com/media/UvnFD56ijyq76/giphy.gif",
-        price: 349,
+        price: 1.00,
       },
       {
         id: 2,
         name: "Pizza",
         description: "Gotta stretch that cheese",
         imageUrl: "https://media.giphy.com/media/4ayiIWaq2VULC/giphy.gif",
-        price: 1499
+        price: 150
       },
       {
         id: 3,
         name: "Cookie",
         description: "Look at them chocolates",
         imageUrl: "https://media.giphy.com/media/9lzBlco6tkvte/giphy.gif",
-        price: 999
+        price: 1.00
       },
       {
         id: 4,
         name: "Mac & Cheese",
         description: "Mmmmm more cheese",
         imageUrl: "https://media.giphy.com/media/9BNFNy343fIys/giphy.gif",
-        price: 599
+        price: 150
       },
       {
         id: 5,
         name: "Bulgogi",
         description: "Sprinkle Sprinkle",
         imageUrl: "https://media.giphy.com/media/l1AsNyDgCOBm9wk2A/giphy.gif",
-        price: 499
+        price: 150
       }
     ],
         productsInCart = [];
@@ -66,10 +66,10 @@ var ShoppingCart = (function($) {
                                </div>
                                <div class="product-name"><span>Product:</span> ${item.name}</div>
                                <div class="product-description"><span>Description:</span> ${item.description}</div>
-                               <div class="product-price"><span>Price:</span> ${item.price} $</div>
+                               <div class="product-price"><span>Price:</span> $${item.price} </div>
                                <div class="product-add-to-cart">
-                                 <a href="#0" class="button see-more">More Details</a>
-                                 <a href="#0" class="button add-to-cart" data-id=${item.id}>Add to Cart</a>
+                                 <a href="#0" class="btn btn-default see-more">More Details</a>
+                                 <a href="#0" class="btn btn-default add-to-cart" data-id=${item.id}>Add to Cart</a>
                                </div>
                             </div>
   `;

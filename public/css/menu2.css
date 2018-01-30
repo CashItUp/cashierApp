@@ -7,7 +7,7 @@
     padding: 0;
     font-family: 'Open Sans', sans-serif;
     font-size: 16px;
-    background: cornsilk;
+    /* background: cornsilk; */
     color: #333;
   }
   
@@ -19,8 +19,8 @@
     padding: 10px;
     border-radius: 5px;
     display: inline-block;
-    background: steelblue;
-    color: white;
+    /* background: steelblue; */
+    /* color: white; */
     font-size: 12px;
     font-weight: bold;
   }
@@ -72,7 +72,7 @@
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 5px;
-    background: azure;
+    /* background: azure; */
   }
   
   
@@ -100,7 +100,7 @@
   
   .see-more {
     float: left;
-    background: indianred;
+    /* background: indianred; */
   }
   
   .add-to-cart {
@@ -112,16 +112,16 @@
     top: 0;
     right: 0;
     width: 300px;
-    min-heigh: 300px;
+    min-height: 300px;
     margin-right: 20px;
     margin-top: 10px;
     padding: 20px;
-    background: wheat;
+    /* background: wheat; */
   }
   
   .shopping-cart-head {
-    background: steelblue;
-    color: white;
+    /* background: steelblue; */
+    /* color: white; */
     padding: 5px;
   }
   
@@ -141,5 +141,5 @@
   }
   
   .cart-checkout {
-    background: limegreen;
+    /* background: limegreen; */
   }
