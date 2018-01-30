@@ -34,11 +34,11 @@ module.exports = function(app) {
 
   // authors route loads author-manager.html
   app.get("/to-go", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/menu.html"));
+    res.sendFile(path.join(__dirname, "../public/menu2.html"));
   });
 
   app.get("/menu", function(req, res) {
-    res.sendFile(path.join(__dirname, "../public/menu.html"));
+    res.sendFile(path.join(__dirname, "../public/menu2.html"));
   });
 
   app.get("/payment", function(req, res) {
