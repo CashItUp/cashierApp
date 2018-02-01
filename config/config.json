@@ -2,11 +2,11 @@
   "development": {
     "username": "root",
     "password": null,
-    "database": "cashier",
+    "database": "employeeid",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
-  "test": {
+  "checkid": {
     "username": "root",
     "password": null,
     "database": "database_test",

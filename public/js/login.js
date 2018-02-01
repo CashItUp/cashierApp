@@ -21,6 +21,7 @@ function checkTime(i) {
   //Numpad
   //Create value to hold
   var addNumber="";
+  var submitNumber;
 
 $("#button-7").on("click",function() {
    addNumber += this.value;
@@ -65,10 +66,19 @@ $("#button-3").on("click",function() {
         $("#holder").val("")
       });
    // "Enter" button
-      $("#button-enter").on("click", function() {
-        addNumber=""
-        $("#holder").val("")
-      });
-    
+      $("#button-enter").on("click", function(event) {
+       
+// match sql data here!!
+// Save the id they typed into the addNumber input
+  var IDSearch=addNumber;
+  // Make an AJAX get request to our api, including the user's book in the url
+  $.get("/api/" + IDSearch, function(data) {
+
+    console.log(data);
+    // Call our renderBooks function to add our books to the page
+    renderID(data);
+    });
+  });
+
 
 
