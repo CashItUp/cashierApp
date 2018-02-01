@@ -1,85 +1,171 @@
-var check = false;
-
-function changeVal(el) {
-  var qt = parseFloat(el.parent().children(".qt").html());
-  var price = parseFloat(el.parent().children(".price").html());
-  var eq = Math.round(price * qt * 100) / 100;
-  
-  el.parent().children(".full-price").html( eq + "€" );
-  
-  changeTotal();			
-}
-
-function changeTotal() {
-  
-  var price = 0;
-  
-  $(".full-price").each(function(index){
-    price += parseFloat($(".full-price").eq(index).html());
-  });
-  
-  price = Math.round(price * 100) / 100;
-  var tax = Math.round(price * 0.05 * 100) / 100
-  var shipping = parseFloat($(".shipping span").html());
-  var fullPrice = Math.round((price + tax + shipping) *100) / 100;
-  
-  if(price == 0) {
-    fullPrice = 0;
-  }
-  
-  $(".subtotal span").html(price);
-  $(".tax span").html(tax);
-  $(".total span").html(fullPrice);
-}
-
-$(document).ready(function(){
-  
-  $(".remove").click(function(){
-    var el = $(this);
-    el.parent().parent().addClass("removed");
-    window.setTimeout(
-      function(){
-        el.parent().parent().slideUp('fast', function() { 
-          el.parent().parent().remove(); 
-          if($(".product").length == 0) {
-            if(check) {
-              $("#cart").html("<h1>The shop does not function, yet!</h1><p>If you liked my shopping cart, please take a second and heart this Pen on <a href='https://codepen.io/ziga-miklic/pen/xhpob'>CodePen</a>. Thank you!</p>");
-            } else {
-              $("#cart").html("<h1>No products!</h1>");
-            }
-          }
-          changeTotal(); 
-        });
-      }, 200);
-  });
-  
-  $(".qt-plus").click(function(){
-    $(this).parent().children(".qt").html(parseInt($(this).parent().children(".qt").html()) + 1);
+var ShoppingCart = (function($) {
+    "use strict";
     
-    $(this).parent().children(".full-price").addClass("added");
+    // Cahce necesarry DOM Elements
+    var productsEl = document.querySelector(".products"),
+        cartEl =     document.querySelector(".shopping-cart-list"),
+        productQuantityEl = document.querySelector(".product-quantity"),
+        emptyCartEl = document.querySelector(".empty-cart-btn"),
+        cartCheckoutEl = document.querySelector(".cart-checkout"),
+        totalPriceEl = document.querySelector(".total-price");
     
-    var el = $(this);
-    window.setTimeout(function(){el.parent().children(".full-price").removeClass("added"); changeVal(el);}, 150);
-  });
-  
-  $(".qt-minus").click(function(){
+    // Fake JSON data array here should be API call
+    var products = [
+      {
+        id: 0,
+        name: "Ramen",
+        description: "Yummy Yummy in my tummy",
+        imageUrl: "https://media.giphy.com/media/10SrYA07iDPyO4/giphy.gif",
+        price: 1.00
+      },
+      {
+        id: 1,
+        name: "Churros",
+        description: "Mmmmm",
+        imageUrl: "https://media.giphy.com/media/UvnFD56ijyq76/giphy.gif",
+        price: 1.00,
+      },
+      {
+        id: 2,
+        name: "Pizza",
+        description: "Gotta stretch that cheese",
+        imageUrl: "https://media.giphy.com/media/4ayiIWaq2VULC/giphy.gif",
+        price: 150
+      },
+      {
+        id: 3,
+        name: "Cookie",
+        description: "Look at them chocolates",
+        imageUrl: "https://media.giphy.com/media/9lzBlco6tkvte/giphy.gif",
+        price: 1.00
+      },
+      {
+        id: 4,
+        name: "Mac & Cheese",
+        description: "Mmmmm more cheese",
+        imageUrl: "https://media.giphy.com/media/9BNFNy343fIys/giphy.gif",
+        price: 150
+      },
+      {
+        id: 5,
+        name: "Bulgogi",
+        description: "Sprinkle Sprinkle",
+        imageUrl: "https://media.giphy.com/media/l1AsNyDgCOBm9wk2A/giphy.gif",
+        price: 150
+      }
+    ],
+        productsInCart = [];
     
-    child = $(this).parent().children(".qt");
-    
-    if(parseInt(child.html()) > 1) {
-      child.html(parseInt(child.html()) - 1);
+    // Pretty much self explanatory function. NOTE: Here I have used template strings (ES6 Feature)
+    var generateProductList = function() {
+      products.forEach(function(item) {
+        var productEl = document.createElement("div");
+        productEl.className = "product";
+        productEl.innerHTML = `<div class="product-image">
+                                  <img src="${item.imageUrl}" alt="${item.name}">
+                               </div>
+                               <div class="product-name"><span>Product:</span> ${item.name}</div>
+                               <div class="product-description"><span>Description:</span> ${item.description}</div>
+                               <div class="product-price"><span>Price:</span> $${item.price} </div>
+                               <div class="product-add-to-cart">
+                                 <a href="#0" class="btn btn-default see-more">More Details</a>
+                                 <a href="#0" class="btn btn-default add-to-cart" data-id=${item.id}>Add to Cart</a>
+                               </div>
+                            </div>
+  `;
+                               
+  productsEl.appendChild(productEl);
+      });
     }
     
-    $(this).parent().children(".full-price").addClass("minused");
+    // Like one before and I have also used ES6 template strings
+    var generateCartList = function() {
+      
+      cartEl.innerHTML = "";
+      
+      productsInCart.forEach(function(item) {
+        var li = document.createElement("li");
+        li.innerHTML = `${item.quantity} ${item.product.name} - $${item.product.price * item.quantity}`;
+        cartEl.appendChild(li);
+      });
+      
+      productQuantityEl.innerHTML = productsInCart.length;
+      
+      generateCartButtons()
+    }
     
-    var el = $(this);
-    window.setTimeout(function(){el.parent().children(".full-price").removeClass("minused"); changeVal(el);}, 150);
-  });
+    
+    // Function that generates Empty Cart and Checkout buttons based on condition that checks if productsInCart array is empty
+    var generateCartButtons = function() {
+      if(productsInCart.length > 0) {
+        emptyCartEl.style.display = "block";
+        cartCheckoutEl.style.display = "block"
+        totalPriceEl.innerHTML = "$ " + calculateTotalPrice();
+      } else {
+        emptyCartEl.style.display = "none";
+        cartCheckoutEl.style.display = "none";
+      }
+    }
+    
+    // Setting up listeners for click event on all products and Empty Cart button as well
+    var setupListeners = function() {
+      productsEl.addEventListener("click", function(event) {
+        var el = event.target;
+        if(el.classList.contains("add-to-cart")) {
+         var elId = el.dataset.id;
+         addToCart(elId);
+        }
+      });
+      
+      emptyCartEl.addEventListener("click", function(event) {
+        if(confirm("Are you sure?")) {
+          productsInCart = [];
+        }
+        generateCartList();
+      });
+    }
+    
+    // Adds new items or updates existing one in productsInCart array
+    var addToCart = function(id) {
+      var obj = products[id];
+      if(productsInCart.length === 0 || productFound(obj.id) === undefined) {
+        productsInCart.push({product: obj, quantity: 1});
+      } else {
+        productsInCart.forEach(function(item) {
+          if(item.product.id === obj.id) {
+            item.quantity++;
+          }
+        });
+      }
+      generateCartList();
+    }
+    
+    
+    // This function checks if project is already in productsInCart array
+    var productFound = function(productId) {
+      return productsInCart.find(function(item) {
+        return item.product.id === productId;
+      });
+    }
   
-  window.setTimeout(function(){$(".is-open").removeClass("is-open")}, 1200);
+    var calculateTotalPrice = function() {
+      return productsInCart.reduce(function(total, item) {
+        return total + (item.product.price *  item.quantity);
+      }, 0);
+    }
+    
+    // This functon starts the whole application
+    var init = function() {
+      generateProductList();
+      setupListeners();
+    }
+    
+    // Exposes just init function to public, everything else is private
+    return {
+      init: init
+    };
+    
+    // I have included jQuery although I haven't used it
+  })(jQuery);
   
-  $(".btn").click(function(){
-    check = true;
-    $(".remove").click();
-  });
-});
+  ShoppingCart.init();
