@@ -40,4 +40,13 @@ module.exports = function(app) {
   app.get("/payment", function(req, res) {
     res.sendFile(path.join(__dirname, "../public/payment.html"));
   });
+    // blog route loads blog.html
+    app.get("/blog", function(req, res) {
+      res.sendFile(path.join(__dirname, "../public/blog.html"));
+    });
+
+      // cms route loads cms.html
+  app.get("/cms", function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/cms.html"));
+  });
 };
