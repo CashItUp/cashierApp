@@ -193,65 +193,34 @@ var url = "https://translate.yandex.net/api/v1.5/tr.json/translate",
 console.log(products)
 $(".product").remove();
 
-function translatethis1(input, lang) {
-  var products = input;
-  for (i = 0; i < products.length; i++) {
+var monkey =[]
+for (i = 0; i < products.length; i++) {
 
-    var output = ''
+  // function translateTest(input, language, select) {
     var xhr = new XMLHttpRequest(),
       textAPI = products[i].name,
-      langAPI = lang,
-      data = "key=" + keyAPI + "&text=" + textAPI + "&lang=" + langAPI;
+      langAPI = "zh"
+    data = "key=" + keyAPI + "&text=" + textAPI + "&lang=" + langAPI;
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.send(data);
     xhr.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
         var res = this.responseText;
-        //document.querySelector('#json').innerHTML = res;
+        document.querySelector('#json').innerHTML = res;
         var json = JSON.parse(res);
         if (json.code == 200) {
-          products[i].name = json.text[0];
-
+          monkey[i]=json.text[0];
         }
         else {
-          products[i].name = products[i].name;
-
+          document.querySelector('#output').innerHTML = "Error Code: " + json.code;
         }
       }
     }
   }
+//}
 
-}
-function translatethis2(input, lang) {
-  var products = input;
-  for (i = 0; i < products.length; i++) {
 
-    var output = ''
-    var xhr = new XMLHttpRequest(),
-      textAPI = products[i].description,
-      langAPI = lang,
-      data = "key=" + keyAPI + "&text=" + textAPI + "&lang=" + langAPI;
-    xhr.open("POST", url, true);
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhr.send(data);
-    xhr.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
-        var res = this.responseText;
-        //document.querySelector('#json').innerHTML = res;
-        var json = JSON.parse(res);
-        if (json.code == 200) {
-          products[i].description = json.text[0];
 
-        }
-        else {
-          products[i].description = products[i].description;
-
-        }
-      }
-    }
-  }
-
-}
 
 

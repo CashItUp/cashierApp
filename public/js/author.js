@@ -25,22 +25,17 @@ function handleAuthorFormSubmit(event) {
   $.get("/api/author/" + authorSearched, function (data) {
 
     console.log(data);
+    if(data!=null) {
     alert("Login Successful!")
     window.location.href = "/service"
+    }
 
   }).then(alertMe);
 }
 
 //create new user if no user found
 function alertMe(data) {
-  // if(data==null)
-  //   {
-  //     upsertAuthor({
-  //       name: nameInput
-  //         .val()
-  //         .trim()
-  //     });
-  //   }
+
   if(data==null)
   alert("Get a userID from the manager")
 }
