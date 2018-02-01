@@ -20,5 +20,17 @@ module.exports = function(app) {
       res.json(dbEmployee);
     });
   });
+
+   app.get("/api/idnumber/:idNumber", function(req, res) {
+    if (req.params.idNumber) {
+      db.Employee.findOne({
+        where: {
+          idNumber: req.params.idNumber
+        }
+      }).then(function(results) {
+        res.json(results);
+      });
+    }
+  });
  
 };
