@@ -73,7 +73,7 @@ $("#button-3").on("click",function() {
   var IDSearch=addNumber;
   // Make an AJAX get request to our api, including the user's book in the url
 
-  $.get("/api/idnumber/" + IDSearch, function(data) {
+  $.get("/api/idnumbers/" + IDSearch, function(data) {
 
     console.log(data); //show if match something
     
