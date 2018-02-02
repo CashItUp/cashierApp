@@ -1,6 +1,7 @@
 $(document).ready(function() {
   // Getting references to the name inout and employee container, as well as the table body
   var nameInput = $("#employee-name");
+  var idInput = $("#employee-id");
   var employeeList = $("tbody");
   var employeeContainer = $(".employee-container");
   // Adding event listeners to the form to create a new object, and the button to delete
@@ -20,10 +21,9 @@ $(document).ready(function() {
     }
     // Calling the upsertEmployee function and passing in the value of the name input
     upsertEmployee({
-      name: nameInput
-        .val()
-        .trim()
-    });
+      name: nameInput.val(),
+      idNumber: idInput.val()
+    })
   }
 
   // A function for creating an employee. Calls getEmployees upon completion
@@ -37,10 +37,8 @@ $(document).ready(function() {
     var newTr = $("<tr>");
     newTr.data("employee", employeeData);
     newTr.append("<td>" + employeeData.name + "</td>");
-    newTr.append("<td> " + employeeData.Posts.length + "</td>");
-    newTr.append("<td><a href='/blog?employee_id=" + employeeData.id + "'>Go to Posts</a></td>");
-    newTr.append("<td><a href='/cms?employee_id=" + employeeData.id + "'>Create a Post</a></td>");
-    newTr.append("<td><a style='cursor:pointer;color:red' class='delete-employee'>Delete Employee</a></td>");
+    newTr.append("<td> " + employeeData.idNumber + "</td>");
+    newTr.append("<td><a style='cursor:pointer;color:red' class='delete-employee'>Delete</a></td>");
     return newTr;
   }
 

@@ -15,11 +15,9 @@
 	<div class="container">
 		<div class="row top-30">
       <div class="col-md-2 col-sm-2">
-        <a class="btn btn-default" href="/blog">Go to Blog</a>
+        <a class="btn btn-default" href="/login.html">Go to login</a>
       </div>
-			<div class="col-md-2 col-sm-2">
-        <a class="btn btn-default" href="/cms">New Post</a>
-      </div>
+			
     </div>
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
@@ -29,9 +27,7 @@
 						<thead>
 							<tr>
 								<th>Name</th>
-								<th># of Posts</th>
-								<th>See Employee's Posts</th>
-								<th>New Post</th>
+							    <th>idNumber</th>
 								<th>Delete Employee</th>
 							</tr>
 						</thead>
@@ -40,6 +36,9 @@
 								<form id="employee-form">
 									<td colspan="4">
 										<input placeholder="Enter a name" id="employee-name" type="text" />
+									</td>
+									<td colspan="4">
+										<input placeholder="Enter new idNumber" id="employee-id" type="integer" />
 									</td>
 									<td><button type="submit" class="btn btn-success">Create Employee</button>
 									</td>
