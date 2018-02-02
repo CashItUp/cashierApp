@@ -84,10 +84,8 @@ $("#button-3").on("click",function() {
     else {
          addNumber="";
         $("#holder").val("")
-
     }
 
-  
     });
   });
 
