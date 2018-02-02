@@ -114,6 +114,11 @@
        // window.location.href = "/blog";
       });
     }
+    function submitOrder(order) {
+      $.post("/api/orders", order, function() {
+       // window.location.href = "/blog";
+      });
+    }
 
 
 
@@ -287,7 +292,10 @@ var ShoppingCart = (function($) {
         if(confirm("Are you sure?")) {
           //productsInCart = [];
           pushToDatabase();
-          console.log("ya")
+          var numberLink="?number_id="+numberId;
+          var tableLink ="?table_id="+tableId; 
+           window.location.href = "/payment"+numberLink+tableLink;
+
         }
       });
 
@@ -316,14 +324,18 @@ var ShoppingCart = (function($) {
       testObject["total"] = calculateTotalPrice();
       testObject["table"] = tableId;
       testObject["tax"] = calculateTotalPrice();
+      testObject["idNumber"] = numberId;
+
       for (var i = 0; i < arrayCart.length; i++) {
         var foodQuantity = $(arrayCart[i]).attr("data-quantity")
+        var foodPrice = $(arrayCart[i]).attr("data-singleprice")
         var foodNumberID = foodPrefix + $(arrayCart[i]).attr("data-idnumber")
-
-        testObject[foodNumberID] = foodQuantity;
+        var foodName = $(arrayCart[i]).attr("data-name")
+        testObject[foodNumberID] = {"quantity":foodQuantity,"price":foodPrice,"name":foodName};
       }
       console.log(testObject)
       submitPost(testObject)
+      submitOrder(testObject)
     }
     // This function checks if project is already in productsInCart array
     var productFound = function(productId) {
