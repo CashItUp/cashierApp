@@ -43,7 +43,7 @@
                             // height: 1 + 3 * Math.random()
                         };
                 //var tableid = list.pop();
-                this.grid.addWidget($('<div><a id="'+node.table +'" href="/service?table_id=' +node.table+ '" class="grid-stack-item-content" /><div/>'),
+                this.grid.addWidget($('<div><a id="'+node.table +'" href="/menu?table_id=' +node.table+ '" class="grid-stack-item-content" /><div/>'),
                     node.x, node.y, node.width, node.height);
                     $('#'+node.table).html(node.table);
                 return false;
@@ -55,7 +55,7 @@
             var items = GridStackUI.Utils.sort(this.serializedData);
             _.each(items, function (node) {
                 var tableid = list.shift();
-                this.grid.addWidget($('<div><a id="'+node.table +'" href="/service?table_id=' +node.table+ '" class="grid-stack-item-content" /><div/>'),
+                this.grid.addWidget($('<div><a id="'+node.table +'" href="/menu?table_id=' +node.table+ '" class="grid-stack-item-content" /><div/>'),
                     node.x, node.y, node.width, node.height);
                 $('#'+node.table).html(node.table);
             }, this);
