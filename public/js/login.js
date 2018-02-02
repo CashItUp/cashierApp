@@ -79,7 +79,7 @@ $("#button-enter").on("click", function (event) {
 
     if (data != null) {
 
-      window.location.href = "/service"
+      window.location.href = "/service?number_id=" + IDSearch
     }
     else {
       addNumber = "";

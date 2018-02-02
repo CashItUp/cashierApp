@@ -1,4 +1,30 @@
-    // Constructing a newPost object to hand to the database
+   
+     // Gets the part of the url that comes after the "?" (which we have if we're updating a post)
+  var url = window.location.search;
+  var numberId;
+  var tableId;
+  var tableIndexOfNumberId;
+    // If we have this section in our url, we pull out the post id from the url
+  // In '?post_id=1', postId is 1
+  if (url.indexOf("?number_id=") !== -1) {
+    var tempArray=url.split("?");
+    tableId = tempArray[1].split("=")[1]
+    numberId= tempArray[2].split("=")[1]
+    //getPostData(postId, "post");
+  }
+
+  $.get("/api/idnumber/" + numberId, function (data) {
+
+    console.log(data); //show if match something
+    tableIndexOfNumberId=data.id;
+    
+
+  });
+
+
+
+  $($(".shopping-cart-list").children().toArray()[1]).html()
+   // Constructing a newPost object to hand to the database
     var food1Input = $("#1");
     var food2Input = $("#2");
     var food3Input = $("#3");
@@ -142,7 +168,36 @@ var ShoppingCart = (function($) {
         description: "Sprinkle Sprinkle",
         imageUrl: "https://media.giphy.com/media/l1AsNyDgCOBm9wk2A/giphy.gif",
         price: 150
+      },
+      {
+        id: 6,
+        name: "French Fries",
+        description: "We fry it extra crispy",
+        imageUrl: "https://media.giphy.com/media/Wwua3dmJmamGc/giphy.gif",
+        price: 150
+      },
+      {
+        id: 7,
+        name: "Salad",
+        description: "More Dressing Please",
+        imageUrl: "https://media.giphy.com/media/31cjqSNMoFJ7y/giphy.gif",
+        price: 150
+      },
+      {
+        id: 8,
+        name: "Coke",
+        description: "The Fizz",
+        imageUrl: "https://media.giphy.com/media/1iLEk2jJFKt6a8ec/giphy.gif",
+        price: 150
+      },
+      {
+        id: 9,
+        name: "Beer",
+        description: "Round and Round we go",
+        imageUrl: "https://media.giphy.com/media/12HB2nDz3npXaw/giphy.gif",
+        price: 150
       }
+      
     ],
         productsInCart = [];
     
@@ -175,6 +230,12 @@ var ShoppingCart = (function($) {
       
       productsInCart.forEach(function(item) {
         var li = document.createElement("li");
+        $(li).attr("data-quantity",item.quantity)
+        .attr("data-name",item.product.name)
+        .attr("data-name",item.product.name)
+        .attr("data-singleprice",item.product.price)
+        .attr("data-idnumber",item.product.id+1)
+
         li.innerHTML = `${item.quantity} ${item.product.name} - $${item.product.price * item.quantity}`;
         cartEl.appendChild(li);
       });
@@ -213,6 +274,15 @@ var ShoppingCart = (function($) {
         }
         generateCartList();
       });
+
+      cartCheckoutEl.addEventListener("click", function(event) {
+        if(confirm("Are you sure?")) {
+          //productsInCart = [];
+          pushToDatabase();
+          console.log("ya")
+        }
+      });
+
     }
     
     // Adds new items or updates existing one in productsInCart array
@@ -229,8 +299,24 @@ var ShoppingCart = (function($) {
       }
       generateCartList();
     }
-    
-    
+    var pushToDatabase = function () {
+      console.log("monkey")
+      var testObject = {}
+      var arrayCart = $(".shopping-cart-list").children().toArray();
+      var foodPrefix = "food";
+      testObject["EmployeeId"] = tableIndexOfNumberId;//this the EmployeeId for the table not the employeeId used for login
+      testObject["total"] = calculateTotalPrice();
+      testObject["table"] = tableId;
+      testObject["tax"] = calculateTotalPrice();
+      for (var i = 0; i < arrayCart.length; i++) {
+        var foodQuantity = $(arrayCart[i]).attr("data-quantity")
+        var foodNumberID = foodPrefix + $(arrayCart[i]).attr("data-idnumber")
+
+        testObject[foodNumberID] = foodQuantity;
+      }
+      console.log(testObject)
+      submitPost(testObject)
+    }
     // This function checks if project is already in productsInCart array
     var productFound = function(productId) {
       return productsInCart.find(function(item) {
