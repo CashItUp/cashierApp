@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-  var Post = sequelize.define("Post", {
+  var Order = sequelize.define("Order", {
     food1: {
       type: DataTypes.JSON,
       allowNull: true,
@@ -110,15 +110,15 @@ module.exports = function(sequelize, DataTypes) {
     }
   });
   
-  Post.associate = function(models) {
-    // We're saying that a Post should belong to an employee
-    // A Post can't be created without an Employee due to the foreign key constraint
-    Post.belongsTo(models.Employee, {
+  Order.associate = function(models) {
+    // We're saying that a Order should belong to an employee
+    // A Order can't be created without an Employee due to the foreign key constraint
+    Order.belongsTo(models.Employee, {
       foreignKey: {
         allowNull: false
       }
     });
   };
 
-  return Post;
+  return Order;
 };
