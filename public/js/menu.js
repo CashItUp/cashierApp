@@ -1,3 +1,98 @@
+    // Constructing a newPost object to hand to the database
+    var food1Input = $("#1");
+    var food2Input = $("#2");
+    var food3Input = $("#3");
+    var food4Input = $("#4");
+    var food5Input = $("#5");
+    var food6Input = $("#6");
+    var food7Input = $("#7");
+    var food8Input = $("#8");
+    var food9Input = $("#9");
+    var food10Input = $("#10");
+    var taxInput  = $("#tax");
+    var totalInput = $("#total");
+    var tableInput = $("#table");
+    var employeeIdInput = $("#employeeid");
+    var cmsForm = $("#cms");
+
+    $(cmsForm).on("submit", handleFormSubmit);
+
+    function handleFormSubmit(event) {
+      event.preventDefault();
+      // Wont submit the post if we are missing a body, title, or author
+      // if (!titleInput.val().trim() || !bodyInput.val().trim() || !authorSelect.val()) {
+      //   return;
+      // }
+      // Constructing a newPost object to hand to the database
+      var newPost = {
+        food1: food1Input
+          .val()
+          .trim(),
+        food2: food2Input
+          .val()
+          .trim(),
+        food3: food3Input
+          .val()
+          .trim(),
+        food4: food4Input
+          .val()
+          .trim(),
+        food5: food5Input
+          .val()
+          .trim(),
+        food6: food6Input
+          .val()
+          .trim(),
+        food7: food7Input
+          .val()
+          .trim(),
+        food8: food8Input
+          .val()
+          .trim(),
+        food9: food9Input
+          .val()
+          .trim(),
+        food10: food10Input
+          .val()
+          .trim(),
+        tax: taxInput
+          .val()
+          .trim(),
+        total: totalInput
+          .val()
+          .trim(),
+        table: tableInput
+          .val()
+          .trim(),
+        EmployeeId: employeeIdInput
+          .val()
+          .trim(),
+      };
+  
+      // If we're updating a post run updatePost to update a post
+      // Otherwise run submitPost to create a whole new post
+ 
+        submitPost(newPost);
+
+    }
+  
+    // Submits a new post and brings user to blog page upon completion
+    function submitPost(post) {
+      $.post("/api/posts", post, function() {
+       // window.location.href = "/blog";
+      });
+    }
+
+
+
+
+
+
+
+
+
+
+
 var ShoppingCart = (function($) {
     "use strict";
     
