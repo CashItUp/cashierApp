@@ -8,10 +8,18 @@
   // In '?post_id=1', postId is 1
   if (url.indexOf("?number_id=") !== -1) {
     var tempArray=url.split("?");
-    tableId = tempArray[1].split("=")[1]
-    numberId= tempArray[2].split("=")[1]
+    numberId= tempArray[1].split("=")[1]
     //getPostData(postId, "post");
   }
+  
+  if (url.indexOf("?table_id=") !== -1) {
+    var tempArray=url.split("?");
+    tableId= tempArray[2].split("=")[1]
+    //getPostData(postId, "post");
+  }else{
+    tableId=0;//tableId 0 for takeout
+  }
+
 
   $.get("/api/idnumber/" + numberId, function (data) {
 
