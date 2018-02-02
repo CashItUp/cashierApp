@@ -1,95 +1,90 @@
-// Getting references to the name inout and author container, as well as the table body
-var nameInput = $("#author-name");
-var authorList = $("tbody");
-var authorContainer = $(".author-container");
-// Adding event listeners to the form to create a new object, and the button to delete
-// an Author
-$(document).on("submit", "#author-form", handleAuthorFormSubmit);
-// $(document).on("click", ".delete-author", handleDeleteButtonPress);
+$(document).ready(function() {
+  // Getting references to the name inout and employee container, as well as the table body
+  var nameInput = $("#employee-name");
+  var employeeList = $("tbody");
+  var employeeContainer = $(".employee-container");
+  // Adding event listeners to the form to create a new object, and the button to delete
+  // an Employee
+  $(document).on("submit", "#employee-form", handleEmployeeFormSubmit);
+  $(document).on("click", ".delete-employee", handleDeleteButtonPress);
 
-// Getting the intiial list of Authors
-getAuthors();
+  // Getting the intiial list of Employees
+  getEmployees();
 
-
-// A function to handle what happens when the form is submitted to create a new Author
-function handleAuthorFormSubmit(event) {
-  event.preventDefault();
-  console.log("icli2cked")
-  // Don't do anything if the name fields hasn't been filled out
-  var authorSearched = $("#author-name").val().trim();
-  if (!authorSearched) {
-    return;
+  // A function to handle what happens when the form is submitted to create a new Employee
+  function handleEmployeeFormSubmit(event) {
+    event.preventDefault();
+    // Don't do anything if the name fields hasn't been filled out
+    if (!nameInput.val().trim().trim()) {
+      return;
+    }
+    // Calling the upsertEmployee function and passing in the value of the name input
+    upsertEmployee({
+      name: nameInput
+        .val()
+        .trim()
+    });
   }
 
-
-  $.get("/api/author/" + authorSearched, function (data) {
-
-    console.log(data);
-    alert("Login Successful!")
-    window.location.href = "/service"
-
-  }).then(alertMe);
-}
-
-//create new user if no user found
-function alertMe(data) {
-  // if(data==null)
-  //   {
-  //     upsertAuthor({
-  //       name: nameInput
-  //         .val()
-  //         .trim()
-  //     });
-  //   }
-  if(data==null)
-  alert("Get a userID from the manager")
-}
-// A function for creating an author. Calls getAuthors upon completion
-function upsertAuthor(authorData) {
-  $.post("/api/authors", authorData)
-    .then(getAuthors);
-}
-
-function getAuthors() {
-  $.get("/api/authors", function (data) {
-    console.log(data);
-  });
-}
-
-function renderBooks(data) {
-  if (data.length !== 0) {
-    console.log("monkey")
-    $("#stats").empty();
-    $("#stats").show();
-
-
-    var div = $("<div>");
-
-    div.append("<h2>" + data.id + "</h2>");
-    div.append("<p>Author: " + data.name + "</p>");
-
-
-    $("#stats").append(div);
-
-
-    // $(".delete").click(function () {
-
-    //   var info = {
-    //     id: $(this).attr("data-id")
-    //   };
-
-    //   $.post("/api/delete", info)
-    //     // On success, run the following code
-    //     .done(function (deldata) {
-    //       // Log the data we found
-    //       console.log(deldata);
-    //       console.log("Deleted Successfully!");
-    //     });
-
-    //   $(this).closest("div").remove();
-
-    // });
-
+  // A function for creating an employee. Calls getEmployees upon completion
+  function upsertEmployee(employeeData) {
+    $.post("/api/employees", employeeData)
+      .then(getEmployees);
   }
-}
 
+  // Function for creating a new list row for employees
+  function createEmployeeRow(employeeData) {
+    var newTr = $("<tr>");
+    newTr.data("employee", employeeData);
+    newTr.append("<td>" + employeeData.name + "</td>");
+    newTr.append("<td> " + employeeData.Posts.length + "</td>");
+    newTr.append("<td><a href='/blog?employee_id=" + employeeData.id + "'>Go to Posts</a></td>");
+    newTr.append("<td><a href='/cms?employee_id=" + employeeData.id + "'>Create a Post</a></td>");
+    newTr.append("<td><a style='cursor:pointer;color:red' class='delete-employee'>Delete Employee</a></td>");
+    return newTr;
+  }
+
+  // Function for retrieving employees and getting them ready to be rendered to the page
+  function getEmployees() {
+    $.get("/api/employees", function(data) {
+      var rowsToAdd = [];
+      for (var i = 0; i < data.length; i++) {
+        rowsToAdd.push(createEmployeeRow(data[i]));
+      }
+      renderEmployeeList(rowsToAdd);
+      nameInput.val("");
+    });
+  }
+
+  // A function for rendering the list of employees to the page
+  function renderEmployeeList(rows) {
+    employeeList.children().not(":last").remove();
+    employeeContainer.children(".alert").remove();
+    if (rows.length) {
+      console.log(rows);
+      employeeList.prepend(rows);
+    }
+    else {
+      renderEmpty();
+    }
+  }
+
+  // Function for handling what to render when there are no employees
+  function renderEmpty() {
+    var alertDiv = $("<div>");
+    alertDiv.addClass("alert alert-danger");
+    alertDiv.text("You must create an Employee before you can create a Post.");
+    employeeContainer.append(alertDiv);
+  }
+
+  // Function for handling what happens when the delete button is pressed
+  function handleDeleteButtonPress() {
+    var listItemData = $(this).parent("td").parent("tr").data("employee");
+    var id = listItemData.id;
+    $.ajax({
+      method: "DELETE",
+      url: "/api/employees/" + id
+    })
+    .done(getEmployees);
+  }
+});
