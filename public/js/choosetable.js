@@ -1,18 +1,4 @@
 //$(function () {
-  // Gets the part of the url that comes after the "?" (which we have if we're updating a post)
-  var url = window.location.search;
-  var numberId;
-  
-    // If we have this section in our url, we pull out the post id from the url
-  // In '?post_id=1', postId is 1
-  if (url.indexOf("?number_id=") !== -1) {
-    numberId = url.split("=")[1];
-    //getPostData(postId, "post");
-  }
-  // Otherwise if we have an employee_id in our url, preset the employee select box to be our Employee
-//   else if (url.indexOf("?employee_id=") !== -1) {
-//     employeeId = url.split("=")[1];
-//   }
 
     var options = {
       float: true
@@ -57,7 +43,7 @@
                             // height: 1 + 3 * Math.random()
                         };
                 //var tableid = list.pop();
-                this.grid.addWidget($('<div><a id="'+node.table +'" href="/menu?table_id=' +node.table+ '?number_id=' + numberId+ '" class="grid-stack-item-content" /><div/>'),
+                this.grid.addWidget($('<div><a id="'+node.table +'" href="/menu?table_id=' +node.table+ '" class="grid-stack-item-content" /><div/>'),
                     node.x, node.y, node.width, node.height);
                     $('#'+node.table).html(node.table);
                 return false;
@@ -69,7 +55,7 @@
             var items = GridStackUI.Utils.sort(this.serializedData);
             _.each(items, function (node) {
                 var tableid = list.shift();
-                this.grid.addWidget($('<div><a id="'+node.table +'" href="/menu?table_id=' +node.table+ '?number_id=' + numberId+ '" class="grid-stack-item-content" /><div/>'),
+                this.grid.addWidget($('<div><a id="'+node.table +'" href="/menu?table_id=' +node.table+ '" class="grid-stack-item-content" /><div/>'),
                     node.x, node.y, node.width, node.height);
                 $('#'+node.table).html(node.table);
             }, this);

@@ -1,119 +1,3 @@
-   
-     // Gets the part of the url that comes after the "?" (which we have if we're updating a post)
-  var url = window.location.search;
-  var numberId;
-  var tableId;
-  var tableIndexOfNumberId;
-    // If we have this section in our url, we pull out the post id from the url
-  // In '?post_id=1', postId is 1
-  if (url.indexOf("?number_id=") !== -1) {
-    var tempArray=url.split("?");
-    tableId = tempArray[1].split("=")[1]
-    numberId= tempArray[2].split("=")[1]
-    //getPostData(postId, "post");
-  }
-
-  $.get("/api/idnumber/" + numberId, function (data) {
-
-    console.log(data); //show if match something
-    tableIndexOfNumberId=data.id;
-    
-
-  });
-
-
-
-  $($(".shopping-cart-list").children().toArray()[1]).html()
-   // Constructing a newPost object to hand to the database
-    var food1Input = $("#1");
-    var food2Input = $("#2");
-    var food3Input = $("#3");
-    var food4Input = $("#4");
-    var food5Input = $("#5");
-    var food6Input = $("#6");
-    var food7Input = $("#7");
-    var food8Input = $("#8");
-    var food9Input = $("#9");
-    var food10Input = $("#10");
-    var taxInput  = $("#tax");
-    var totalInput = $("#total");
-    var tableInput = $("#table");
-    var employeeIdInput = $("#employeeid");
-    var cmsForm = $("#cms");
-
-    $(cmsForm).on("submit", handleFormSubmit);
-
-    function handleFormSubmit(event) {
-      event.preventDefault();
-      // Wont submit the post if we are missing a body, title, or author
-      // if (!titleInput.val().trim() || !bodyInput.val().trim() || !authorSelect.val()) {
-      //   return;
-      // }
-      // Constructing a newPost object to hand to the database
-      var newPost = {
-        food1: food1Input
-          .val()
-          .trim(),
-        food2: food2Input
-          .val()
-          .trim(),
-        food3: food3Input
-          .val()
-          .trim(),
-        food4: food4Input
-          .val()
-          .trim(),
-        food5: food5Input
-          .val()
-          .trim(),
-        food6: food6Input
-          .val()
-          .trim(),
-        food7: food7Input
-          .val()
-          .trim(),
-        food8: food8Input
-          .val()
-          .trim(),
-        food9: food9Input
-          .val()
-          .trim(),
-        food10: food10Input
-          .val()
-          .trim(),
-        tax: taxInput
-          .val()
-          .trim(),
-        total: totalInput
-          .val()
-          .trim(),
-        table: tableInput
-          .val()
-          .trim(),
-        EmployeeId: 1
-      };
-  
-      // If we're updating a post run updatePost to update a post
-      // Otherwise run submitPost to create a whole new post
- 
-        submitPost(newPost);
-
-    }
-  
-    // Submits a new post and brings user to blog page upon completion
-    function submitPost(post) {
-      $.post("/api/posts", post, function() {
-       // window.location.href = "/blog";
-      });
-    }
-
-
-
-
-
-
-
-
 var ShoppingCart = (function($) {
     "use strict";
     
@@ -168,36 +52,7 @@ var ShoppingCart = (function($) {
         description: "Sprinkle Sprinkle",
         imageUrl: "https://media.giphy.com/media/l1AsNyDgCOBm9wk2A/giphy.gif",
         price: 150
-      },
-      {
-        id: 6,
-        name: "French Fries",
-        description: "We fry it extra crispy",
-        imageUrl: "https://media.giphy.com/media/Wwua3dmJmamGc/giphy.gif",
-        price: 150
-      },
-      {
-        id: 7,
-        name: "Salad",
-        description: "More Dressing Please",
-        imageUrl: "https://media.giphy.com/media/31cjqSNMoFJ7y/giphy.gif",
-        price: 150
-      },
-      {
-        id: 8,
-        name: "Coke",
-        description: "The Fizz",
-        imageUrl: "https://media.giphy.com/media/1iLEk2jJFKt6a8ec/giphy.gif",
-        price: 150
-      },
-      {
-        id: 9,
-        name: "Beer",
-        description: "Round and Round we go",
-        imageUrl: "https://media.giphy.com/media/12HB2nDz3npXaw/giphy.gif",
-        price: 150
       }
-      
     ],
         productsInCart = [];
     
@@ -230,12 +85,6 @@ var ShoppingCart = (function($) {
       
       productsInCart.forEach(function(item) {
         var li = document.createElement("li");
-        $(li).attr("data-quantity",item.quantity)
-        .attr("data-name",item.product.name)
-        .attr("data-name",item.product.name)
-        .attr("data-singleprice",item.product.price)
-        .attr("data-idnumber",item.product.id+1)
-
         li.innerHTML = `${item.quantity} ${item.product.name} - $${item.product.price * item.quantity}`;
         cartEl.appendChild(li);
       });
@@ -274,15 +123,6 @@ var ShoppingCart = (function($) {
         }
         generateCartList();
       });
-
-      cartCheckoutEl.addEventListener("click", function(event) {
-        if(confirm("Are you sure?")) {
-          //productsInCart = [];
-          pushToDatabase();
-          console.log("ya")
-        }
-      });
-
     }
     
     // Adds new items or updates existing one in productsInCart array
@@ -299,24 +139,8 @@ var ShoppingCart = (function($) {
       }
       generateCartList();
     }
-    var pushToDatabase = function () {
-      console.log("monkey")
-      var testObject = {}
-      var arrayCart = $(".shopping-cart-list").children().toArray();
-      var foodPrefix = "food";
-      testObject["EmployeeId"] = tableIndexOfNumberId;//this the EmployeeId for the table not the employeeId used for login
-      testObject["total"] = calculateTotalPrice();
-      testObject["table"] = tableId;
-      testObject["tax"] = calculateTotalPrice();
-      for (var i = 0; i < arrayCart.length; i++) {
-        var foodQuantity = $(arrayCart[i]).attr("data-quantity")
-        var foodNumberID = foodPrefix + $(arrayCart[i]).attr("data-idnumber")
-
-        testObject[foodNumberID] = foodQuantity;
-      }
-      console.log(testObject)
-      submitPost(testObject)
-    }
+    
+    
     // This function checks if project is already in productsInCart array
     var productFound = function(productId) {
       return productsInCart.find(function(item) {
