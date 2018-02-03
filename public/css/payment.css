@@ -5,6 +5,10 @@ body {
     margin: 3em;
     padding: 0;
   }
+
+  .navbar{
+  background-color:lightcoral  
+}
   #register {
     width: 20em;
     margin: auto;
