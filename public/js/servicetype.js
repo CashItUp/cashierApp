@@ -8,7 +8,7 @@
     numberId = url.split("=")[1];
     $("#dinein").attr("href","/dine-in?number_id=" + numberId)
     $("#togo").attr("href","/To-Go?number_id=" + numberId)
-
+    $("#kitchen").attr("href","/kitchen?number_id=" + numberId)
     //getPostData(postId, "post");
   }
   // Otherwise if we have an employee_id in our url, preset the employee select box to be our Employee

@@ -46,12 +46,12 @@ function currencyFormat(number) {
 var lastOrder;
 $.get("/api/ordersall/" + numberId, function (data) {
 
-    console.log(data); //show if match something
+
     lastOrder = data.pop();
 
 
 
-    console.log(lastOrder)
+
 
     for (var i = 1; i <= 10; i++) {
         console.log(lastOrder)
@@ -70,3 +70,6 @@ $.get("/api/ordersall/" + numberId, function (data) {
         document.getElementById('total').innerHTML = ("$"+lastOrder.total)
     }
 });
+
+$("#dinein").attr("href","/dine-in?number_id=" + numberId)
+$("#togo").attr("href","/To-Go?number_id=" + numberId)

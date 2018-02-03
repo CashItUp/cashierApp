@@ -1,6 +1,18 @@
 
-
+var url = window.location.search;
+var numberId;
+var tableId;
+var tableIndexOfNumberId;
+  // If we have this section in our url, we pull out the post id from the url
+// In '?post_id=1', postId is 1
+if (url.indexOf("?number_id=") !== -1) {
+  var tempArray=url.split("?");
+  numberId= tempArray[1].split("=")[1]
+  //getPostData(postId, "post");
+}
 //Test code
+
+$("#datamain").attr("href","/service?number_id=" + numberId)
 
 
 
