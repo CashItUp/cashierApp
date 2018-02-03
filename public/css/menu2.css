@@ -113,14 +113,14 @@
   
   .shopping-cart {
     position: fixed;
-    top: 100px;
+    bottom: 0px;
     right: 0;
-    width: 300px;
+    width: 250px;
     min-height: 300px;
     margin-right: 20px;
     margin-top: 10px;
     padding: 20px;
-    /* background: wheat; */
+    background: wheat;
   }
   
   .shopping-cart-head {
