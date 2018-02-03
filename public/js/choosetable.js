@@ -9,6 +9,13 @@
     numberId = url.split("=")[1];
     //getPostData(postId, "post");
   }
+  $("#datamain").attr("href","/service?number_id=" + numberId)
+
+
+  
+
+
+  
   // Otherwise if we have an employee_id in our url, preset the employee select box to be our Employee
 //   else if (url.indexOf("?employee_id=") !== -1) {
 //     employeeId = url.split("=")[1];

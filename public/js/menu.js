@@ -19,7 +19,7 @@
   }else{
     tableId=0;//tableId 0 for takeout
   }
-
+  $("#datamain").attr("href","/service?number_id=" + numberId)
 
   $.get("/api/idnumber/" + numberId, function (data) {
 
