@@ -1,6 +1,20 @@
 body {
-    background: #EEE;
+      min-width: 100%;
+    min-height: 100%;
+    size: 100%
+    height: auto;
     font-family: sans-serif;
     margin: 1em;
     padding: 0;
+    background-position: center center;
+     background-repeat: no-repeat;
+     background-size: cover;
+      background-attachment: fixed;
+
   }
+
+
+    .navbar{
+  background-color:lightcoral  
+}
+  
