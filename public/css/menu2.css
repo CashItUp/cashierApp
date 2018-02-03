@@ -1,16 +1,17 @@
+
 * {
     box-sizing: border-box;
   }
   
-  body {
+
+    /* body {
     margin: 0;
     padding: 0;
     font-family: 'Open Sans', sans-serif;
     font-size: 16px;
-    /* background: cornsilk; */
+     background: cornsilk; 
     color: #333;
-  }
-  
+  } */
   a {
     text-decoration: none;
   }
@@ -109,7 +110,7 @@
   
   .shopping-cart {
     position: fixed;
-    top: 0;
+    top: 100px;
     right: 0;
     width: 300px;
     min-height: 300px;
