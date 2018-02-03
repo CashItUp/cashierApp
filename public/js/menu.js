@@ -1,4 +1,4 @@
-   
+
      // Gets the part of the url that comes after the "?" (which we have if we're updating a post)
   var url = window.location.search;
   var numberId;
@@ -274,6 +274,7 @@ var ShoppingCart = (function($) {
     // Setting up listeners for click event on all products and Empty Cart button as well
     var setupListeners = function() {
       productsEl.addEventListener("click", function(event) {
+        console.log("monkey")
         var el = event.target;
         if(el.classList.contains("add-to-cart")) {
          var elId = el.dataset.id;
@@ -292,9 +293,11 @@ var ShoppingCart = (function($) {
         if(confirm("Are you sure?")) {
           //productsInCart = [];
           pushToDatabase();
+          var getLanguage = $(".goog-te-combo").val();
           var numberLink="?number_id="+numberId;
           var tableLink ="?table_id="+tableId; 
-           window.location.href = "/payment"+numberLink+tableLink;
+          var languageLink = "?lan=" + getLanguage;
+           window.location.href = "/payment"+numberLink+tableLink+languageLink;
 
         }
       });
@@ -315,6 +318,7 @@ var ShoppingCart = (function($) {
       }
       generateCartList();
     }
+
     var pushToDatabase = function () {
       console.log("monkey")
       var testObject = {}
