@@ -296,8 +296,7 @@ var ShoppingCart = (function($) {
           var getLanguage = $(".goog-te-combo").val();
           var numberLink="?number_id="+numberId;
           var tableLink ="?table_id="+tableId; 
-          var languageLink = "?lan=" + getLanguage;
-           window.location.href = "/payment"+numberLink+tableLink+languageLink;
+           window.location.href = "/payment"+numberLink+tableLink;
 
         }
       });
