@@ -3,6 +3,9 @@
     box-sizing: border-box;
   }
   
+  .navbar{
+  background-color:lightcoral  
+}
 
     /* body {
     margin: 0;
